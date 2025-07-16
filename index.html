@@ -64,49 +64,81 @@
 
   <div class="buttons">
     <!-- Google Calendar -->
-    <a href="https://calendar.google.com/calendar/render?cid=bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com" target="_blank">
+    <a href="https://calendar.google.com/calendar/render?cid=bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com
+" target="_blank">
       <button class="google">Add to Google Calendar</button>
     </a>
 
     <!-- Apple Calendar -->
-    <a href="https://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com/public/basic.ics" target="_blank">
-      <button class="apple">Add to Apple Calendar</button>
-    </a>
+    <button class="apple" onclick="showAppleInstructions()">Subscribe in Apple Calendar</button>
 
-    <!-- Outlook Calendar -->
-    <button class="outlook" onclick="showInstructions()">Add to Microsoft Outlook</button>
+    <!-- Microsoft Outlook -->
+    <button class="outlook" onclick="showOutlookInstructions()">Subscribe in Microsoft Outlook</button>
+  </div>
+
+  <!-- Apple Instructions -->
+  <div class="instructions" id="appleInstructions">
+    <h2>Subscribe in Apple Calendar</h2>
+    <p><strong>On iPhone or iPad:</strong></p>
+    <ol>
+      <li>Go to <strong>Settings → Calendar → Accounts → Add Account</strong></li>
+      <li>Tap <strong>Other</strong> → <strong>Add Subscribed Calendar</strong></li>
+      <li>Paste this link:</li>
+      <code id="appleIcs">https://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com
+/public/basic.ics</code><br>
+      <button class="copy-btn" onclick="copyAppleLink()">📋 Copy Link</button>
+      <li>Tap <strong>Next</strong>, then <strong>Save</strong>.</li>
+    </ol>
+
+    <p><strong>On Mac:</strong></p>
+    <ol>
+      <li>Open the <strong>Calendar</strong> app</li>
+      <li>Click <strong>File → New Calendar Subscription</strong></li>
+      <li>Paste the same link above and click <strong>Subscribe</strong></li>
+    </ol>
   </div>
 
   <!-- Outlook Instructions -->
   <div class="instructions" id="outlookInstructions">
     <h2>Subscribe in Microsoft Outlook</h2>
     <ol>
-      <li>Click this link to open Outlook web calendar:  
+      <li>Click this link to open Outlook Web Calendar:  
         <a href="https://outlook.office.com/calendar/addcalendar" target="_blank">
           <strong>Add Calendar Page</strong>
         </a>
       </li>
       <li>Select <strong>“Subscribe from web”</strong>.</li>
       <li>Paste this calendar URL:</li>
-      <code id="icsLink">https://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com/public/basic.ics</code><br>
-      <button class="copy-btn" onclick="copyLink()">📋 Copy Link</button>
+      <code id="outlookIcs">https://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com
+/public/basic.ics</code><br>
+      <button class="copy-btn" onclick="copyOutlookLink()">📋 Copy Link</button>
       <li>Name the calendar and click <strong>Import</strong>.</li>
     </ol>
   </div>
 
   <script>
-    function showInstructions() {
+    function showAppleInstructions() {
+      document.getElementById('appleInstructions').style.display = 'block';
+    }
+
+    function showOutlookInstructions() {
       document.getElementById('outlookInstructions').style.display = 'block';
     }
 
-    function copyLink() {
-      const linkText = document.getElementById('icsLink').textContent;
-      navigator.clipboard.writeText(linkText)
-        .then(() => alert("ICS link copied to clipboard!"))
+    function copyAppleLink() {
+      const appleLink = document.getElementById('appleIcs').textContent;
+      navigator.clipboard.writeText(appleLink)
+        .then(() => alert("Apple calendar link copied!"))
+        .catch(err => alert("Copy failed: " + err));
+    }
+
+    function copyOutlookLink() {
+      const outlookLink = document.getElementById('outlookIcs').textContent;
+      navigator.clipboard.writeText(outlookLink)
+        .then(() => alert("Outlook calendar link copied!"))
         .catch(err => alert("Copy failed: " + err));
     }
   </script>
 
 </body>
 </html>
-
