@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Covey Fellows Calendar</title>
   <style>
     body {
@@ -11,50 +11,76 @@
       background-color: #f2f2f2;
       color: #333;
     }
+
     h1 {
       font-size: 2.2em;
       margin-bottom: 40px;
     }
+
     .buttons {
       margin-bottom: 30px;
     }
-    button {
-      padding: 12px 20px;
+
+    a, button {
+      display: inline-block;
+      padding: 12px 24px;
       font-size: 16px;
       margin: 10px;
-      border: none;
       border-radius: 6px;
-      cursor: pointer;
+      text-decoration: none;
       color: white;
+      cursor: pointer;
+      border: none;
+      min-width: 160px;
+      user-select: none;
     }
-    .google { background-color: #34A853; }
-    .apple { background-color: #000; }
-    .outlook { background-color: #0078D4; }
+
+    a.google {
+      background-color: #34A853;
+    }
+
+    button.outlook {
+      background-color: #0078D4;
+    }
+
+    a.apple-desktop, a.apple-mobile {
+      background-color: #000;
+    }
+
     .instructions {
-      max-width: 600px;
-      margin: 30px auto;
-      text-align: left;
       display: none;
-      background: #fff;
+      max-width: 600px;
+      margin: 20px auto;
+      text-align: left;
+      background: white;
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
+
     code {
       background: #eee;
-      padding: 5px 8px;
+      padding: 4px 6px;
       border-radius: 4px;
-      display: inline-block;
-      word-break: break-word;
+      display: block;
+      max-width: 100%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      white-space: normal;
+      font-family: monospace;
+      margin-bottom: 10px;
     }
+
     .copy-btn {
-      margin-top: 10px;
       background-color: #0078D4;
       color: white;
       border: none;
       padding: 6px 12px;
       border-radius: 4px;
       cursor: pointer;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -64,65 +90,63 @@
 
   <div class="buttons">
     <!-- Google Calendar -->
-    <a href="https://calendar.google.com/calendar/render?cid=bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com
-" target="_blank">
-      <button class="google">Add to Google Calendar</button>
+    <a href="https://calendar.google.com/calendar/render?cid=bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com" target="_blank" class="google" rel="noopener noreferrer">
+      Google Calendar
     </a>
 
-    <!-- Apple Calendar -->
-    <button class="apple" onclick="showAppleInstructions()">Subscribe in Apple Calendar</button>
+    <!-- Outlook -->
+    <button class="outlook" onclick="toggleInstructions()">Outlook</button>
 
-    <!-- Microsoft Outlook -->
-    <button class="outlook" onclick="showOutlookInstructions()">Subscribe in Microsoft Outlook</button>
+    <!-- Apple Desktop -->
+    <a href="https://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com/public/basic.ics" target="_blank" class="apple-desktop" rel="noopener noreferrer">
+      Apple Calendar (Desktop)
+    </a>
+
+    <!-- Apple Mobile -->
+    <a href="webcal://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com/public/basic.ics" class="apple-mobile">
+      Apple Calendar (Mobile)
+    </a>
   </div>
 
-  <!-- Apple Instructions -->
-  <div class="instructions" id="appleInstructions">
-    <h2>Subscribe in Apple Calendar</h2>
+  <div class="instructions" id="instructions">
+    <h2>How to Subscribe</h2>
+    <h3>Apple Calendar</h3>
     <p><strong>On iPhone or iPad:</strong></p>
     <ol>
       <li>Go to <strong>Settings → Calendar → Accounts → Add Account</strong></li>
       <li>Tap <strong>Other</strong> → <strong>Add Subscribed Calendar</strong></li>
       <li>Paste this link:</li>
-      <code id="appleIcs">https://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com
-/public/basic.ics</code><br>
-      <button class="copy-btn" onclick="copyAppleLink()">📋 Copy Link</button>
+      <code id="appleIcs">https://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com/public/basic.ics</code>
+      <button class="copy-btn" onclick="copyAppleLink()">📋 Copy Apple Link</button>
       <li>Tap <strong>Next</strong>, then <strong>Save</strong>.</li>
     </ol>
 
     <p><strong>On Mac:</strong></p>
     <ol>
-      <li>Open the <strong>Calendar</strong> app</li>
-      <li>Click <strong>File → New Calendar Subscription</strong></li>
-      <li>Paste the same link above and click <strong>Subscribe</strong></li>
+      <li>Open the <strong>Calendar</strong> app.</li>
+      <li>Click <strong>File → New Calendar Subscription</strong>.</li>
+      <li>Paste the same link above and click <strong>Subscribe</strong>.</li>
     </ol>
-  </div>
 
-  <!-- Outlook Instructions -->
-  <div class="instructions" id="outlookInstructions">
-    <h2>Subscribe in Microsoft Outlook</h2>
+    <h3>Microsoft Outlook</h3>
     <ol>
       <li>Click this link to open Outlook Web Calendar:  
-        <a href="https://outlook.office.com/calendar/addcalendar" target="_blank">
+        <a href="https://outlook.office.com/calendar/addcalendar" target="_blank" rel="noopener noreferrer">
           <strong>Add Calendar Page</strong>
         </a>
       </li>
       <li>Select <strong>“Subscribe from web”</strong>.</li>
       <li>Paste this calendar URL:</li>
-      <code id="outlookIcs">https://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com
-/public/basic.ics</code><br>
-      <button class="copy-btn" onclick="copyOutlookLink()">📋 Copy Link</button>
+      <code id="outlookIcs">https://calendar.google.com/calendar/ical/bee251e919e27630eb016bafdd23dee026903897ecafdce5fddefdfa6f99ea2e@group.calendar.google.com/public/basic.ics</code>
+      <button class="copy-btn" onclick="copyOutlookLink()">📋 Copy Outlook Link</button>
       <li>Name the calendar and click <strong>Import</strong>.</li>
     </ol>
   </div>
 
   <script>
-    function showAppleInstructions() {
-      document.getElementById('appleInstructions').style.display = 'block';
-    }
-
-    function showOutlookInstructions() {
-      document.getElementById('outlookInstructions').style.display = 'block';
+    function toggleInstructions() {
+      const box = document.getElementById('instructions');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
     }
 
     function copyAppleLink() {
